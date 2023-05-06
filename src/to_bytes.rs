@@ -1,5 +1,3 @@
-use std::borrow::Borrow;
-
 use seq_macro::seq;
 #[cfg(feature = "uuid")]
 use uuid::Uuid;
