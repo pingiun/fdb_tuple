@@ -1,6 +1,6 @@
 [package]
 name = "fdb_tuple"
-version = "0.2.1"
+version = "0.3.0"
 authors = ["Jelle Besseling <jelle@pingiun.com>"]
 description = "A crate to convert between FoundationDB Tuple Layer tuples and Rust tuples"
 license = "Unlicense"
