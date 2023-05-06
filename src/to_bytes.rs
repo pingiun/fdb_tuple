@@ -1,3 +1,5 @@
+use std::borrow::Borrow;
+
 use seq_macro::seq;
 #[cfg(feature = "uuid")]
 use uuid::Uuid;
@@ -17,6 +19,12 @@ impl ToBytes for [u8] {
         }
         bytes.push(b'\x00');
         bytes
+    }
+}
+
+impl<const N: usize> ToBytes for [u8; N] {
+    fn to_bytes(&self, nested: u8) -> Vec<u8> {
+        self[..].to_bytes(nested)
     }
 }
 
@@ -226,3 +234,23 @@ where
         }
     }
 }
+
+macro_rules! deref_impl {
+    (
+        $(#[doc = $doc:tt])*
+        <$($desc:tt)+
+    ) => {
+        $(#[doc = $doc])*
+        impl <$($desc)+ {
+            #[inline]
+            fn to_bytes(&self, nested: u8) -> Vec<u8> {
+                (**self).to_bytes(nested)
+            }
+        }
+    };
+}
+
+deref_impl!(<'a, T: ?Sized> ToBytes for &'a T where T: ToBytes);
+deref_impl!(<'a, T: ?Sized> ToBytes for &'a mut T where T: ToBytes);
+deref_impl!(<T: ?Sized> ToBytes for Box<T> where T: ToBytes);
+
