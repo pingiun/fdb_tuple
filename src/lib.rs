@@ -7,8 +7,8 @@
 use from_bytes::{FromBytes, Error};
 use to_bytes::ToBytes;
 
-mod to_bytes;
-mod from_bytes;
+pub mod to_bytes;
+pub mod from_bytes;
 
 /// Converts a value to a tuple-encoded byte vector.
 ///
