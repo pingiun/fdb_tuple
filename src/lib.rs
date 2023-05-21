@@ -95,4 +95,11 @@ mod test {
     fn float_spec() {
         assert_eq!(to_bytes(-42f32), b"\x20\x3d\xd7\xff\xff");
     }
+
+    #[test]
+    fn decode() {
+        let bytes = b"\x02cpki\x00\x18\\\xe2\xcc\xc2\x01\xe3\xd2!\x8c|\xc4x\xe7\xfd\x14\xfe\xd1.\x01u\xf9\x156\xdc\xb7\xc0_O\xc3\xc9\r\x99\xb6\xf3\xd1\xef\x99\x00\x15\t\x01\xfc0\x8e\x83\x1c\xbad\xf5Vf\x9b:2\x85\x91\xb6H!2>\x1dRL\x8b>\x00\xff\x00\xff\xad\x1d2P\xac\x00";
+        let (tag, timestamp, pubkey, kind, id): (String, u64, Vec<u8>, u64, Vec<u8>) = from_bytes(bytes).unwrap();
+        assert_eq!(tag, "cpki");
+    }
 }

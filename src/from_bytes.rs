@@ -65,6 +65,7 @@ fn vec_from_bytes(bytes: &[u8], typecode: u8) -> Result<(Vec<u8>, &[u8]), Error>
         if *rest.first().ok_or_else(eof)? == 0x00 && rest.get(1) == Some(&0xFF) {
             rest = &rest[2..];
             new.push(0x00);
+            continue;
         }
         if *rest.first().ok_or_else(eof)? == 0x00 {
             return Ok((new, &rest[1..]));
